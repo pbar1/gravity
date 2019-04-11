@@ -1,0 +1,66 @@
+# github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6
+github.com/armon/consul-api
+# github.com/coreos/etcd v3.3.12+incompatible
+github.com/coreos/etcd/client
+github.com/coreos/etcd/pkg/pathutil
+github.com/coreos/etcd/pkg/srv
+github.com/coreos/etcd/pkg/types
+github.com/coreos/etcd/version
+# github.com/coreos/go-semver v0.2.0
+github.com/coreos/go-semver/semver
+# github.com/fsnotify/fsnotify v1.4.7
+github.com/fsnotify/fsnotify
+# github.com/hashicorp/hcl v1.0.0
+github.com/hashicorp/hcl
+github.com/hashicorp/hcl/hcl/printer
+github.com/hashicorp/hcl/hcl/ast
+github.com/hashicorp/hcl/hcl/parser
+github.com/hashicorp/hcl/hcl/token
+github.com/hashicorp/hcl/json/parser
+github.com/hashicorp/hcl/hcl/scanner
+github.com/hashicorp/hcl/hcl/strconv
+github.com/hashicorp/hcl/json/scanner
+github.com/hashicorp/hcl/json/token
+# github.com/inconshreveable/mousetrap v1.0.0
+github.com/inconshreveable/mousetrap
+# github.com/magiconair/properties v1.8.0
+github.com/magiconair/properties
+# github.com/mitchellh/mapstructure v1.1.2
+github.com/mitchellh/mapstructure
+# github.com/pelletier/go-toml v1.2.0
+github.com/pelletier/go-toml
+# github.com/spf13/afero v1.1.2
+github.com/spf13/afero
+github.com/spf13/afero/mem
+# github.com/spf13/cast v1.3.0
+github.com/spf13/cast
+# github.com/spf13/cobra v0.0.3
+github.com/spf13/cobra
+# github.com/spf13/jwalterweatherman v1.0.0
+github.com/spf13/jwalterweatherman
+# github.com/spf13/pflag v1.0.3
+github.com/spf13/pflag
+# github.com/spf13/viper v1.3.2
+github.com/spf13/viper
+github.com/spf13/viper/remote
+# github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77
+github.com/xordataexchange/crypt/config
+github.com/xordataexchange/crypt/backend
+github.com/xordataexchange/crypt/backend/consul
+github.com/xordataexchange/crypt/backend/etcd
+github.com/xordataexchange/crypt/encoding/secconf
+# golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
+golang.org/x/crypto/openpgp
+golang.org/x/crypto/openpgp/armor
+golang.org/x/crypto/openpgp/errors
+golang.org/x/crypto/openpgp/packet
+golang.org/x/crypto/openpgp/s2k
+golang.org/x/crypto/cast5
+golang.org/x/crypto/openpgp/elgamal
+# golang.org/x/sys v0.0.0-20181205085412-a5c9d58dba9a
+golang.org/x/sys/unix
+# golang.org/x/text v0.3.0
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
+# gopkg.in/yaml.v2 v2.2.2
+gopkg.in/yaml.v2
