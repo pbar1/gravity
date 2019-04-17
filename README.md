@@ -1,20 +1,19 @@
-# Gravity
+<h1 align="center" style="border-bottom: none;">Gravity</h1>
+<h3 align="center">Terraform dynamic state-driver</h3>
 
-Today in history: the first picture of a black hole was taken
+<p align="center">
+  <img src="./assets/blackhole.png"/>
+  <h5 align="center">Today in history: the first photograph of a black hole was released (not pictured)</h5>
+</p>
 
 ## Goal
 
-Swiss army knife for developers to be successful and move faster when working on the Einstein Platform.
+The Terraform binary functions as a barrier that definitions must pass through
+in order to be instantiated into real infrastructure, and once this happens
+successfully the state is stored remotely. This means the state of the
+infrastructure can drift in between runs of the Terraform binary's `apply`
+command. In essence, we want to check the current state continuously and take
+action to pull the infrastructure back into the desired state. Thus, the name
+_Gravity_.
 
-## Usage
-
-```
-gravity list
-```
-
-## Design
-
-Gravity is a CLI tool configured remotely using Consul. That way, developers using the tooling can have immediate updates to configuration. Feature flags are even possible. (Einstein wouldn't be thrilled about this, as it seems kinda like [spooky action at a distance][1]!)
-
-
-[1]: https://en.wikipedia.org/wiki/Quantum_entanglement
+## TBC
