@@ -15,7 +15,8 @@ func Init(path string) (*string, error) {
 		return nil, err
 	}
 
-	args := []string{"init", "-no-color"}
+	// TODO: lock should not be false
+	args := []string{"init", "-no-color", "-lock=false"}
 	_, outCh := tf.RunCommandAsync(nil, path, args, nil, "")
 
 	var outStrB strings.Builder
@@ -39,7 +40,7 @@ func Plan(path string) (*string, error) {
 		return nil, err
 	}
 
-	args := []string{"plan", "-no-color"}
+	args := []string{"plan", "-no-color", "-lock=false"}
 	_, outCh := tf.RunCommandAsync(nil, path, args, nil, "")
 
 	var outStrB strings.Builder
@@ -63,7 +64,7 @@ func Apply(path string) (*string, error) {
 		return nil, err
 	}
 
-	args := []string{"apply", "-no-color", "-auto-approve"}
+	args := []string{"apply", "-no-color", "-auto-approve", "-lock=false"}
 	_, outCh := tf.RunCommandAsync(nil, path, args, nil, "")
 
 	var outStrB strings.Builder

@@ -1,7 +1,10 @@
 package gravity
 
 import (
-	"log"
+	"os"
+
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -22,8 +25,9 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	if err := rootCmd.Execute(); err != nil {
-		log.Fatal(err)
+		log.Fatal().Msgf("%s", err)
 	}
 }
 
@@ -40,11 +44,15 @@ func initConfig() {
 	viper.BindEnv("consul_addr", "GRAVITY_CONSUL_ADDR")
 
 	consulAddr := viper.GetString("consul_addr")
-	viper.AddRemoteProvider("consul", consulAddr, "gravity/config")
+	consulConfigKey := "gravity/config"
+	viper.AddRemoteProvider("consul", consulAddr, consulConfigKey)
 	viper.SetConfigType("hcl")
+
+	log.Debug().Str("consulAddr", consulAddr).Str("consulConfigKey", consulConfigKey).
+		Msg("Reading config from Consul")
 
 	err := viper.ReadRemoteConfig()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Msgf("%s", err)
 	}
 }
