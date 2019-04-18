@@ -13,7 +13,5 @@ in order to be instantiated into real infrastructure, and once this happens
 successfully the state is stored remotely. This means the state of the
 infrastructure can drift in between runs of the Terraform binary's `apply`
 command. In essence, we want to check the current state continuously and take
-action to pull the infrastructure back into the desired state. Thus, the name
-_Gravity_.
-
-## TBC
+action to pull the infrastructure back into the desired state. Thus the name:
+_gravity_.

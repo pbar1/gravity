@@ -15,8 +15,8 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gravity",
-	Short: "Einstein Platform developer multitool",
-	Long:  `Einstein Platform developer multitool`,
+	Short: "Terraform dynamic state-driver",
+	Long:  `Terraform dynamic state-driver`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -33,12 +33,15 @@ func init() {
 
 // initConfig reads config from Consul
 func initConfig() {
-	viper.SetDefault("consuladdr", "localhost:8500")
-	viper.BindEnv("consuladdr", "GRAVITY_CONSUL_ADDR")
+	viper.SetDefault("clone_dir", ".gravity")
+	viper.BindEnv("github_token", "GITHUB_TOKEN")
 
-	consulAddr := viper.GetString("consuladdr")
+	viper.SetDefault("consul_addr", "localhost:8500")
+	viper.BindEnv("consul_addr", "GRAVITY_CONSUL_ADDR")
+
+	consulAddr := viper.GetString("consul_addr")
 	viper.AddRemoteProvider("consul", consulAddr, "gravity/config")
-	viper.SetConfigType("hcl") // Need to explicitly set this to json
+	viper.SetConfigType("hcl")
 
 	err := viper.ReadRemoteConfig()
 	if err != nil {
