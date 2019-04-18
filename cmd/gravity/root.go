@@ -40,6 +40,9 @@ func initConfig() {
 	viper.SetDefault("clone_dir", ".gravity")
 	viper.BindEnv("github_token", "GITHUB_TOKEN")
 
+	viper.SetDefault("default_period", 30)
+	viper.BindEnv("default_period", "GRAVITY_DEFAULT_PERIOD")
+
 	viper.SetDefault("consul_addr", "localhost:8500")
 	viper.BindEnv("consul_addr", "GRAVITY_CONSUL_ADDR")
 

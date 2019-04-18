@@ -6,10 +6,10 @@ import (
 	"github.com/runatlantis/atlantis/server/events/terraform"
 )
 
+// TODO: these are all fairly ugly and use internal loggers
+
 // Init runs terraform init on the given directory
-// TODO: this is ugly
 func Init(path string) (*string, error) {
-	// logger := logging.NewSimpleLogger("fooSource", false, logging.Debug)
 	tf, err := terraform.NewClient(nil, "", "", "", "", nil)
 	if err != nil {
 		return nil, err
@@ -32,9 +32,7 @@ func Init(path string) (*string, error) {
 }
 
 // Plan runs a Terraform plan on the given directory, and returns the output
-// TODO: this is ugly
 func Plan(path string) (*string, error) {
-	// logger := logging.NewSimpleLogger("fooSource", false, logging.Debug)
 	tf, err := terraform.NewClient(nil, "", "", "", "", nil)
 	if err != nil {
 		return nil, err
@@ -56,9 +54,7 @@ func Plan(path string) (*string, error) {
 }
 
 // Apply runs a Terraform apply on the given directory, and returns the output
-// TODO: this is ugly
 func Apply(path string) (*string, error) {
-	// logger := logging.NewSimpleLogger("fooSource", false, logging.Debug)
 	tf, err := terraform.NewClient(nil, "", "", "", "", nil)
 	if err != nil {
 		return nil, err
