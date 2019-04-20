@@ -36,7 +36,7 @@ func superviseRepo(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup
 		log.Fatal().Str("repoURL", repoURL).Msg("Parsing repo URL failed")
 	}
 
-	cloneDirRepo := path.Join(u.Host, strings.TrimRight(u.Path, ".git"))
+	cloneDirRepo := path.Join(u.Host, strings.TrimSuffix(u.Path, ".git"))
 	cloneDirFull := path.Join(cloneDirBase, cloneDirRepo)
 
 	if _, err := os.Stat(cloneDirFull); os.IsNotExist(err) {
@@ -46,7 +46,7 @@ func superviseRepo(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup
 			log.Fatal().Str("repo", repoURL).Msg("Cloning failed")
 		}
 	} else {
-		log.Debug().Str("repo", cloneDirRepo).Msg("Repo exits - pulling")
+		log.Debug().Str("repo", cloneDirRepo).Msg("Repo exits; pulling")
 		err = git.Pull(cloneDirFull, githubToken)
 		if err != nil {
 			log.Fatal().Str("repo", cloneDirRepo).Msg("Pulling failed")

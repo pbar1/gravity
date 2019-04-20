@@ -21,3 +21,7 @@ _Gravity_.
 - Continuous scanning of environmental drift from desired state
 - Take action to return to desired state
 - Create short-lived clone of the infrastructure based on branch
+
+## Testing
+
+You can run end-to-end tests using a local Consul cluster for both remote state and as a resource provider. `make consul-config` to start and configure a local Consul cluster running in a container.
