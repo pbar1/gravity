@@ -59,7 +59,7 @@ func superviseRepo(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup
 		log.Fatal().Str("repo", cloneDirRepo).Msg("Backend dir search failed")
 	}
 
-	log.Debug().Str("backendDirs", strings.Join(backendDirs, "")).Msg("Found backend directories")
+	log.Debug().Str("backendDirs", "["+strings.Join(backendDirs, " ")+"]").Msg("Found backend directories")
 	for _, backendDir := range backendDirs {
 		go superviseBackend(backendDir, wg)
 		wg.Add(1)
