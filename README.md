@@ -20,7 +20,7 @@ _Gravity_.
 
 - Continuous scanning of environmental drift from desired state
 - Take action to return to desired state
-- Create short-lived clone of the infrastructure based on branch
+- Create short-lived clone of the infrastructure based on branch (coming soon)
 
 ## Testing
 
@@ -29,7 +29,6 @@ You can run end-to-end tests using a local Consul cluster for both remote state 
 ## TODOs
 
 Tier 0
-- Handle SIGTERM interrupts for graceful shutdown
 - Support workspaces in core server logic
 - Cache results in in-memory database
 - Add a status UI that reads from cache
@@ -43,4 +42,4 @@ Tier 2
 - Prometheus metrics
 - Slack notifications
 - Terragrunt support
-- Watch git branches and spin up short-lived, namespaced infrastructure
+- Watch git branches to spin up short-lived infrastructure
