@@ -1,0 +1,9 @@
+[submodule "test/gravity-test-multi"]
+	path = test/gravity-test-multi
+	url = https://github.com/einsteinplatform/gravity-test-multi.git
+[submodule "test/gravity-test-workspaces"]
+	path = test/gravity-test-workspaces
+	url = https://github.com/einsteinplatform/gravity-test-workspaces.git
+[submodule "test/gravity-test-simple"]
+	path = test/gravity-test-simple
+	url = https://github.com/einsteinplatform/gravity-test-simple.git
