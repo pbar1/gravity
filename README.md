@@ -24,4 +24,23 @@ _Gravity_.
 
 ## Testing
 
-You can run end-to-end tests using a local Consul cluster for both remote state and as a resource provider. `make consul-config` to start and configure a local Consul cluster running in a container.
+You can run end-to-end tests using a local Consul cluster for both remote state and as a resource provider. `make consul-config` to start one running in a container.
+
+## TODOs
+
+Tier 0
+- Handle SIGTERM interrupts for graceful shutdown
+- Support workspaces in core server logic
+- Cache results in in-memory database
+- Add a status UI that reads from cache
+
+Tier 1
+- Check that git path and backend path match
+- Check that code complies to `terraform fmt`
+- Set _warn_ and _enforce_ mode
+
+Tier 2
+- Prometheus metrics
+- Slack notifications
+- Terragrunt support
+- Watch git branches and spin up short-lived, namespaced infrastructure
