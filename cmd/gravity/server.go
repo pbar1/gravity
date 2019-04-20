@@ -42,6 +42,8 @@ func init() {
 }
 
 func supervise(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	log.Debug().Str("repoURL", repoURL).Msg("Parsing repo URL")
 	u, err := url.Parse(repoURL)
 	if err != nil {
@@ -65,34 +67,49 @@ func supervise(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup) {
 		}
 	}
 
-	log.Debug().Str("repo", cloneDirRepo).Msg("Running Terraform init")
-	_, err = gravity.Init(cloneDirFull)
+	log.Debug().Str("repo", cloneDirRepo).Msg("Searching for Terraform backend directories")
+	backendDirs, err := gravity.FindStatefulDirs(cloneDirFull)
 	if err != nil {
-		log.Fatal().Str("repo", cloneDirRepo).Msg("Init failed")
+		log.Fatal().Str("repo", cloneDirRepo).Msg("Backend dir search failed")
+	}
+
+	log.Debug().Str("backendDirs", strings.Join(backendDirs, "")).Msg("Found backend directories")
+	for _, backendDir := range backendDirs {
+		go superviseBackend(backendDir, wg)
+		wg.Add(1)
+	}
+}
+
+func superviseBackend(backendDir string, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	log.Debug().Str("backendDir", backendDir).Msg("Running Terraform init")
+	_, err := gravity.Init(backendDir)
+	if err != nil {
+		log.Fatal().Str("backendDir", backendDir).Msg("Init failed")
 	}
 
 	for {
-		log.Debug().Str("repo", cloneDirRepo).Msg("Running Terraform plan")
-		planOut, err := gravity.Plan(cloneDirFull)
+		log.Debug().Str("backendDir", backendDir).Msg("Running Terraform plan")
+		planOut, err := gravity.Plan(backendDir)
 		if err != nil {
-			log.Fatal().Str("repo", cloneDirRepo).Msg("Plan failed")
+			log.Error().Str("backendDir", backendDir).Msg("Plan failed")
+			continue
 		}
 
 		if !strings.Contains(*planOut, "No changes. Infrastructure is up-to-date.") {
-			log.Info().Str("repo", cloneDirRepo).Msg("Drift detected! Running Terraform apply")
-			_, err := gravity.Apply(cloneDirFull)
+			log.Info().Str("backendDir", backendDir).Msg("Drift detected! Running Terraform apply")
+			_, err := gravity.Apply(backendDir)
 			if err != nil {
-				log.Fatal().Str("repo", cloneDirRepo).Msg("Apply failed")
+				log.Fatal().Str("backendDir", backendDir).Msg("Apply failed")
 			}
-			log.Info().Str("repo", cloneDirRepo).Msg("Apply succeeded")
+			log.Info().Str("backendDir", backendDir).Msg("Apply succeeded")
 		} else {
-			log.Debug().Str("repo", cloneDirRepo).Msg("No changes")
+			log.Debug().Str("backendDir", backendDir).Msg("No changes")
 		}
 
 		time.Sleep(time.Duration(viper.GetInt("default_period")) * time.Second)
-
-		// TODO: if signal ctrl-c received, graceful shutdown -> break
 	}
-
-	wg.Done()
 }
+
+// TODO: if signal ctrl-c received, graceful shutdown -> break

@@ -6,8 +6,9 @@ require (
 	github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6 // indirect
 	github.com/coreos/etcd v3.3.12+incompatible // indirect
 	github.com/coreos/go-etcd v2.0.0+incompatible // indirect
-	github.com/coreos/go-semver v0.2.0 // indirect
 	github.com/hashicorp/go-getter v1.2.0 // indirect
+	github.com/hashicorp/hcl v1.0.0
+	github.com/hashicorp/terraform v0.11.13
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.1.2 // indirect

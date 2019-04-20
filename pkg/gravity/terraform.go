@@ -1,7 +1,11 @@
 package gravity
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
+
+	tfconfig "github.com/hashicorp/terraform/config"
 
 	"github.com/runatlantis/atlantis/server/events/terraform"
 )
@@ -73,4 +77,39 @@ func Apply(path string) (*string, error) {
 	outStr := outStrB.String()
 
 	return &outStr, nil
+}
+
+// FindStatefulDirs takes directory root and returns the paths within
+// that contain a Terraform "backend" definition
+func FindStatefulDirs(dir string) ([]string, error) {
+	var tfStatefulDirs []string
+
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		f, err := os.Stat(path)
+		if err != nil {
+			return err
+		}
+
+		if f.IsDir() {
+			tfConfig, err := tfconfig.LoadDir(path)
+			if err != nil {
+				if strings.HasPrefix(err.Error(), "No Terraform configuration files found in directory") {
+					return nil
+				}
+				return err
+			}
+
+			if tfConfig.Terraform.Backend != nil {
+				tfStatefulDirs = append(tfStatefulDirs, path)
+			}
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return tfStatefulDirs, nil
 }
