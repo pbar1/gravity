@@ -116,6 +116,7 @@ planLoop:
 		}
 
 		// TODO: need to randomize when the goroutines run, else API throttling will occur
+		// TODO: don't call Viper here, pass it in
 		wake := makeSleepChan(viper.GetInt("default_period"))
 
 		select {
