@@ -19,10 +19,10 @@ import (
 // StartServer clones the provided Git repositories and begins
 // supervising the Terraform projects contained within them
 func StartServer(repoURLs []string, cloneDirBase, githubToken string) {
-	sigterm, quit := make(chan os.Signal, 2), make(chan struct{})
-	signal.Notify(sigterm, os.Interrupt, syscall.SIGTERM)
+	sigint, quit := make(chan os.Signal, 2), make(chan struct{})
+	signal.Notify(sigint, os.Interrupt, syscall.SIGTERM)
 	go func() {
-		<-sigterm
+		<-sigint // should exit immediately if we get another onec
 		log.Debug().Msg("Signal interrupt received; cleaning up")
 		close(quit)
 	}()

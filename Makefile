@@ -6,4 +6,4 @@ consul-stop:
 
 # needs consul on local PATH...
 consul-config: consul-start
-	bash ./test/config-consul.sh
+	bash ./test/consul-config.sh
