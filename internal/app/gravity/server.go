@@ -28,18 +28,16 @@ func StartServer(repoURLs []string, cloneDirBase, githubToken string) {
 	}()
 
 	var wg sync.WaitGroup
-
 	for _, repoURL := range repoURLs {
 		go fanoutRepo(repoURL, cloneDirBase, githubToken, &wg, quit)
 		wg.Add(1)
 	}
-
 	wg.Wait()
 }
 
 // fanoutRepo clones a git repo, finds its Terraform project directories,
 // and starts goroutines for each one
-func fanoutRepo(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup, quit chan struct{}) {
+func fanoutRepo(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup, quit <-chan struct{}) {
 	defer wg.Done()
 
 	log.Debug().Str("repoURL", repoURL).Msg("Parsing repo URL")
@@ -84,7 +82,7 @@ func fanoutRepo(repoURL, cloneDirBase, githubToken string, wg *sync.WaitGroup, q
 
 // TODO fanoutBackend() -> superviseWorkspaces()
 
-func superviseBackend(backendDir string, wg *sync.WaitGroup, quit chan struct{}) {
+func superviseBackend(backendDir string, wg *sync.WaitGroup, quit <-chan struct{}) {
 	defer wg.Done()
 
 	log.Debug().Str("backendDir", backendDir).Msg("Running Terraform init")
@@ -132,11 +130,11 @@ planLoop:
 
 // makeSleepChan creates a channel that will close after the provided
 // number of seconds
-func makeSleepChan(seconds int) chan struct{} {
+func makeSleepChan(seconds int) <-chan struct{} {
 	wake := make(chan struct{})
 	go func() {
+		defer close(wake)
 		time.Sleep(time.Duration(seconds) * time.Second)
-		close(wake)
 	}()
 	return wake
 }
